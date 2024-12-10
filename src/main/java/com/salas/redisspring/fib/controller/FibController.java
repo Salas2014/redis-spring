@@ -15,8 +15,13 @@ public class FibController {
     @Autowired
     private FibService service;
 
-    @GetMapping("/{index}/{name}")
-    public Mono<Integer> fetFib(@PathVariable int index, @PathVariable String name) {
-       return Mono.fromSupplier(() -> service.getFib(index, name));
+    @GetMapping("/{index}")
+    public Mono<Integer> fetFib(@PathVariable int index) {
+       return Mono.fromSupplier(() -> service.getFib(index));
+    }
+
+    @GetMapping("/{index}/clear")
+    public Mono<Void> clear(@PathVariable int index) {
+        return Mono.fromRunnable(() -> service.cashEvict(index));
     }
 }
